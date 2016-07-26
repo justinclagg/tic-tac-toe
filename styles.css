@@ -1,63 +1,64 @@
 h1 {
-  font-size: 30px;
-  margin: 0px;
+	font-size: 30px;
+	margin: 0px;
 }
 
 .btn-group {
-  padding-left: 10px;
+	padding-left: 10px;
 }
 
 .contents {
-  margin: 30px 10px 30px 10px;
+	margin: 30px 10px 30px 10px;
 }
 
 .flex-row {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
 }
 
 .square {
-  display: flex;
-  box-sizing: border-box;	/* Width of box includes padding */
-  align-items: center;
-  justify-content: center;	/* Vertical alignment */
-  font-size: 3em;
-  flex-basis: 33.333%;
-  max-width: 150px;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
+	display: flex;
+	box-sizing: border-box;	/* Width of box includes padding */
+	align-items: center;
+	justify-content: center;	/* Vertical alignment */
+	font-size: 3em;
+	flex-basis: 33.333%;
+	max-width: 150px;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
 }
 
 /* Remove outside borders */
 #square-2,
 #square-5,
 #square-8 {
-  border-right-color: transparent;
+	border-right-color: transparent;
 }
 
 #square-6,
 #square-7,
 #square-8 {
-  border-bottom-color: transparent;
+	border-bottom-color: transparent;
 }
 
 /* Fills cell to make them square */
 .square::after {
-  content: "";
-  padding-bottom: 100%;
+	display: table;
+	content: "";
+	padding-bottom: 100%;
 }
 
 .square:hover {
-  background-color: #EEEEEE;
+	background-color: #EEEEEE;
 }
 
 .winning-square__user,
 .winning-square__user:hover {
-  background-color: #79d279;
+	background-color: #79d279;
 }
 
 .winning-square__comp,
 .winning-square__comp:hover {
-  background-color: #d27979;
+	background-color: #d27979;
 }
