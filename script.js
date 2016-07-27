@@ -9,7 +9,8 @@ $(document).ready(function () {
 		boardLen = board.length,
 		status = "running",
 		depth = 100,
-		winningLine = [];
+		winningLine = [],
+		userTurn = true;
 	
 	// Symbol changes
 	$(".symbol-buttons > button").click(function changeSymbol() {
@@ -29,12 +30,13 @@ $(document).ready(function () {
 
 	// User move
 	$(".square").click(function userMove() {
-		if (status === "running" && $(this).html() === "") {
+		if (status === "running" && userTurn === true && $(this).html() === "") {
 			var squareIndex = $(this).attr("id").slice(7);
 			board[squareIndex] = false;
 			$(this).html(userSymbol);
 			if (gameOver(board) === false) {
-				compMove();
+				userTurn = false;
+				setTimeout(compMove, 1000);
 			}
 		}
 	});
@@ -102,6 +104,7 @@ $(document).ready(function () {
 		}
 		updateBoard();
 		gameOver(board);
+		userTurn = true;
 	}
   
 	function checkTerminal(node) {
@@ -214,6 +217,7 @@ $(document).ready(function () {
 		}
 		board = Array(9).fill(null);
 		status = "running";
+		userTurn = true;
 	}
 
 });
