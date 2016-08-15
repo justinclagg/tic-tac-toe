@@ -6,67 +6,68 @@
 	<meta name="author" content="Justin Clagg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,300,100,700,500' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" type="text/css" href="../justinclagg.github.io/assets/css/project-footer.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" async></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js" defer></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" defer></script>
+    <script type="text/javascript" src="script.js" defer></script>
 </head>
 <body>
-  <!-- Navigation bar -->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Display after navbar collapse -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed btn-lg" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
-          <span class="sr-only">Settings</span>
-          <span class="glyphicon glyphicon-cog"></span><span class="caret"></span>
-        </button>
-        <a class="navbar-brand" href="#"><h1>Tic Tac Toe</h1></a>
-      </div>
-      <!-- navbar items that collapse on mobile -->
-      <div class="collapse navbar-collapse" id="navbar-collapse">
-        <!-- Symbol selection -->
-        <ul class="nav navbar-nav navbar-right">
-          <li class="btn-group symbol-buttons" role="group" aria-label="Symbol">
-            <button type="button" class="btn btn-default navbar-btn btn-lg active">X</button>
-            <button type="button" class="btn btn-default navbar-btn btn-lg">O</button>
-          </li>
-        </ul>
-        <!-- Difficulty selection -->
-        <ul class="nav navbar-nav navbar-right">
-          <li class="btn-group difficulty-buttons" role="group" aria-label="Difficulty">
-            <button type="button" class="btn btn-default navbar-btn btn-lg active">Easy</button>
-            <button type="button" class="btn btn-default navbar-btn btn-lg">Medium</button>
-            <button type="button" class="btn btn-default navbar-btn btn-lg">Hard</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- Tic tac toe squares -->
-  <div class="contents">
-    <div class="flex-row">
-      <div id="square-0" class="square"></div>
-      <div id="square-1" class="square"></div>
-      <div id="square-2" class="square"></div>
-    </div>
-    <div class="flex-row">
-      <div id="square-3" class="square"></div>
-      <div id="square-4" class="square"></div>
-      <div id="square-5" class="square"></div>
-    </div>
-    <div class="flex-row">
-      <div id="square-6" class="square"></div>
-      <div id="square-7" class="square"></div>
-      <div id="square-8" class="square"></div>
-    </div>
-  </div>
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Display after navbar collapse -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed btn-lg" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="sr-only">Settings</span>
+					<span class="glyphicon glyphicon-cog"></span><span class="caret"></span>
+				</button>
+				<a class="navbar-brand" href="#"><h1>Tic Tac Toe</h1></a>
+			</div>
+			<!-- navbar items that collapse on mobile -->
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<!-- Symbol selection -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="btn-group symbol-buttons" role="group" aria-label="Symbol">
+						<button type="button" class="btn btn-default navbar-btn btn-lg active">X</button>
+						<button type="button" class="btn btn-default navbar-btn btn-lg">O</button>
+					</li>
+				</ul>
+				<!-- Difficulty selection -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="btn-group difficulty-buttons" role="group" aria-label="Difficulty">
+						<button type="button" class="btn btn-default navbar-btn btn-lg active">Easy</button>
+						<button type="button" class="btn btn-default navbar-btn btn-lg">Medium</button>
+						<button type="button" class="btn btn-default navbar-btn btn-lg">Hard</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Tic tac toe squares -->
+	<div class="board">
+		<div class="flex-row">
+			<div id="square-0" class="square"></div>
+			<div id="square-1" class="square"></div>
+			<div id="square-2" class="square"></div>
+		</div>
+		<div class="flex-row">
+			<div id="square-3" class="square"></div>
+			<div id="square-4" class="square"></div>
+			<div id="square-5" class="square"></div>
+		</div>
+		<div class="flex-row">
+			<div id="square-6" class="square"></div>
+			<div id="square-7" class="square"></div>
+			<div id="square-8" class="square"></div>
+		</div>
+	</div>
 	<footer class="project-footer">
+		<p>Copyright © 2016 Justin Clagg</p>
 		<a href="http://www.justinclagg.com">Portfolio</a>
 		<a href="https://github.com/justinclagg/tic-tac-toe" target="_blank">Source</a>
-		<p>Copyright © 2016 Justin Clagg</p>
 	</footer>
 </body>
 </html>

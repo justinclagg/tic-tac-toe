@@ -3,19 +3,31 @@ body {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
+	user-select: none;
+	font-family: "Alegreya Sans", sans-serif;
+	color: #000;
+	background-color: #FFF;
 }
+
+/* Options Bar */
 
 h1 {
 	font-size: 30px;
-	margin: 0px;
+	margin: 0;
 }
 
 .btn-group {
 	padding-left: 10px;
 }
 
-.contents {
-	margin: 30px 10px 30px 10px;
+.btn-group .btn:focus {
+	outline: none;
+}
+
+/* Tic Tac Toe Board */
+
+.board {
+	margin: 30px 10px;
 }
 
 .flex-row {
@@ -26,39 +38,33 @@ h1 {
 
 .square {
 	display: flex;
-	box-sizing: border-box;	/* Width of box includes padding */
-	align-items: center;
-	justify-content: center;	/* Vertical alignment */
-	font-size: 3em;
-	font-weight: bold;
+	align-items: center; /* vertical alignment */
+	justify-content: center;
 	flex-basis: 33.333%;
 	max-width: 150px;
+	font-size: 3em;
+	font-weight: bold;
 	border-bottom: 3px solid #777;
 	border-right: 3px solid #777;
 }
 
-/* Remove outside borders */
-#square-2,
-#square-5,
-#square-8 {
-	border-right-color: transparent;
-}
-
-#square-6,
-#square-7,
-#square-8 {
-	border-bottom-color: transparent;
-}
-
-/* Fills cell to make them square */
 .square::after {
-	display: table;
+	display: block;
 	content: "";
 	padding-bottom: 100%;
 }
 
 .square:hover {
 	background-color: #EEEEEE;
+}
+
+/* Remove outside borders */
+#square-2, #square-5, #square-8 {
+	border-right-color: transparent;
+}
+
+#square-6, #square-7, #square-8 {
+	border-bottom-color: transparent;
 }
 
 .winning-square__user,

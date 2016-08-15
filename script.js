@@ -1,24 +1,27 @@
-/*eslint-env browser, jquery */
+
 $(document).ready(function () {
+
 	"use strict";
 
 	var userSymbol = "X",
 		compSymbol = "O",
 		difficulty = "Easy",
-		board =  Array(9).fill(null),
+		board =  Array(9).fill(null), // true represents a Computer square, while false is the User 
 		boardLen = board.length,
-		status = "running",
-		depth = 100,
 		winningLine = [],
+		maxDepth = 100,
+		running = false,
 		userTurn = true;
 	
 	// Symbol changes
 	$(".symbol-buttons > button").click(function changeSymbol() {
-		var tempSymbol = compSymbol;
-		compSymbol = userSymbol;
-		userSymbol = tempSymbol;
-		$(this).addClass("active");
-		$(this).siblings().removeClass("active");
+		if (!running) {
+			var tempSymbol = compSymbol;
+			compSymbol = userSymbol;
+			userSymbol = tempSymbol;
+			$(this).addClass("active");
+			$(this).siblings().removeClass("active");
+		}
 	});
 
 	// Difficulty changes
@@ -30,7 +33,10 @@ $(document).ready(function () {
 
 	// User move
 	$(".square").click(function userMove() {
-		if (status === "running" && userTurn === true && $(this).html() === "") {
+		running = true;
+		// Allow a move if it is the user's turn and the square is empty
+		if (running && userTurn && $(this).html() === "") {
+			// Get the number from the square id, and use as an index for it's position
 			var squareIndex = $(this).attr("id").slice(7);
 			board[squareIndex] = false;
 			$(this).html(userSymbol);
@@ -41,72 +47,33 @@ $(document).ready(function () {
 		}
 	});
 
+	// Checks the current board to see if the game is over
 	function gameOver(node) {
 		var terminalStatus = checkTerminal(node);
 		switch(terminalStatus) {
+		// No terminal state
 		case null:
 			return false;
+		// User has won
 		case "User":
 			win("User");
-			status = "off";
+			running = false;
 			return true;
+		// Computer has won
 		case "Computer":
 			win("Computer");
-			status = "off";
+			running = false;
 			return true;
+		// Tie
 		case "Tie":
-			status = "off";
 			setTimeout(newGame, 1500);
+			running = false;
 			return true;
 		}
 	}
 
-	function updateBoard() {
-		for (var i = 0; i < boardLen; i++) {
-			if (board[i] === true) {
-				$("#square-" + i).text(compSymbol);
-			}
-			else if (board[i] === false) {
-				$("#square-" + i).text(userSymbol);
-			}
-		}
-	}
-
-	function compMove() {
-		var nextVal, bestVal, bestChild, children;
-		bestVal = -1000;
-		children = getChildNodes(board, true);
-		children.forEach(function getMove(child) {
-			nextVal = minimax(child, depth, false);	// false because it is the user's turn
-			if (nextVal > bestVal) {
-				bestVal = nextVal;
-				bestChild = child;
-			}
-		});
-		if (difficulty === "Easy") {
-			if (Math.random() < 0.50) {
-				board = bestChild;
-			}
-			else {
-				board = children[Math.floor(Math.random() * children.length)];
-			}
-		}
-		else if (difficulty === "Medium") {
-			if (Math.random() < 0.90) {
-				board = bestChild;
-			}
-			else {
-				board = children[Math.floor(Math.random() * children.length)];
-			}
-		}
-		else if (difficulty === "Hard") {
-			board = bestChild;
-		}
-		updateBoard();
-		gameOver(board);
-		userTurn = true;
-	}
-  
+	// Checks a given node for a terminal state
+	// Returns null, "Tie", "Computer" win, or "User" win
 	function checkTerminal(node) {
 		// Check diagonals for win
 		if (node[0] !== null && node[0] === node[4] && node[4] === node[8]) {
@@ -139,15 +106,70 @@ $(document).ready(function () {
 		return null;
 	}
 
+	// Computer determines the optimal move using minimax, and then selects its move based on the difficulty level
+	function compMove() {
+		var nextVal, bestVal, bestChild, children;
+		bestVal = -1000;
+		// Create an array of all child nodes of the current board (all possible moves)
+		children = getChildNodes(board, true);
+		// Determine which child node has the highest minimax value (optimal move for computer)
+		children.forEach(function getMove(child) {
+			nextVal = minimax(child, maxDepth, false);	// false because it is the user's turn
+			if (nextVal > bestVal) {
+				bestVal = nextVal;
+				bestChild = child;
+			}
+		});
+		// Easy: 50% chance of making a random move
+		if (difficulty === "Easy") {
+			if (Math.random() < 0.50) {
+				board = bestChild;
+			}
+			else {
+				board = children[Math.floor(Math.random() * children.length)];
+			}
+		}
+		// Medium: 10% chance of making a random move
+		else if (difficulty === "Medium") {
+			if (Math.random() < 0.90) {
+				board = bestChild;
+			}
+			else {
+				board = children[Math.floor(Math.random() * children.length)];
+			}
+		}
+		// Hard: Always makes the optimal move
+		else if (difficulty === "Hard") {
+			board = bestChild;
+		}
+		updateBoard();
+		gameOver(board);
+		userTurn = true;
+	}
+
+	// Updates the current board display
+	function updateBoard() {
+		for (var i = 0; i < boardLen; i++) {
+			if (board[i] === true) {
+				$("#square-" + i).text(compSymbol);
+			}
+			else if (board[i] === false) {
+				$("#square-" + i).text(userSymbol);
+			}
+		}
+	}
+
+	// Runs recursively to create a game tree starting at the given node
+	// Assigns a value to the given node based on its terminal nodes
 	function minimax(node, depth, maximizingPlayer) {
 		// Check if a leaf node has been reached
 		var terminalNode = checkTerminal(node);
 		if (depth === 0 || terminalNode !== null) {
 			switch(terminalNode) {
 			case "Computer":
-				return 10 - (depth - depth);
+				return 10 - (maxDepth - depth);
 			case "User":
-				return -10 + (depth - depth);
+				return -10 + (maxDepth - depth);
 			case "Tie":
 				return 0;
 			}
@@ -165,7 +187,7 @@ $(document).ready(function () {
 			});
 			return bestVal;
 		} else {
-			// Minimizing player
+			// Minimizing player (User)
 			bestVal = 1000;
 			children = getChildNodes(node, false);
 			children.forEach(function recursiveMinimax(child) {
@@ -176,10 +198,12 @@ $(document).ready(function () {
 		}
 	}
 
+	// Returns an array with all possible children of a given node
 	function getChildNodes(node, maximizingPlayer) {
 		var childrenArr = [],
 			nodeCopy = [];
 		for (var i = 0; i < boardLen; i++) {
+			// Fill each empty board space, creating a new child node for each
 			if (node[i] === null) {
 				nodeCopy = node.slice();
 				nodeCopy[i] = maximizingPlayer;
@@ -189,6 +213,7 @@ $(document).ready(function () {
 		return childrenArr;
 	}
 
+	// Change the color of the winning squares based on who the winner was
 	function win(player) {
 		if (player === "User") {
 			for (var i = 0; i < 3; i++) {
@@ -202,6 +227,7 @@ $(document).ready(function () {
 		setTimeout(newGame, 1500, player);
 	}
 
+	// Remove coloring from previous win and start a new game
 	function newGame(player) {
 		if (player === "User") {
 			for (var i = 0; i < 3; i++) {
@@ -216,7 +242,6 @@ $(document).ready(function () {
 			$("#square-" + k).html("");
 		}
 		board = Array(9).fill(null);
-		status = "running";
 		userTurn = true;
 	}
 
